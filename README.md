@@ -80,8 +80,10 @@ soft-locks, and every waking reachable. `m` mutes.
 
 Art north star is **John Tenniel's 1865 wood-engraving line** (public domain), flooded with
 saturated, drifting dream-colour that drains toward pale real light as you wake and super-saturates
-as you sink. Procedural SVG ships now; generated Tenniel-dream-colour sheets drop into
-`assets/scenes/` later (see `BIBLE.md` §10). Sound is a generative WebAudio music-box that detunes
+as you sink. **Fifteen generated Tenniel-dream-colour plates** ship in `assets/scenes/` (one per
+backbone room, made with Higgsfield `nano_banana_pro`); the game further **desaturates them live as
+the Great Index corrects Wonderland into sense**. Procedural SVG in `art.js` is the fallback for any
+scene without a plate. Sound is a generative WebAudio music-box that detunes
 and tempo-warps as you sink and rights itself as you surface — plus a clock stuck at six, a grin
 that vanishes mid-phrase, and the clean cadence of the riverbank.
 
