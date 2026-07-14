@@ -215,6 +215,22 @@ dark(r){ return G('dk',[[0,'#0a0a12'],[.6,'#14101c'],[1,'#1a1424']])+rect(0,0,W,
   +alice(450,360,110,'#2a2438')
   +path(`M310,220 q140,80 280,0`,null,'#3a3450',6,.5)   /* a faded grin */
   +frame('#3a3450');},
+
+/* THE GREAT INDEX — a cathedral of card-catalogue drawers; the corrected,
+   colourless Wonderland. Everything gridded, ordered, dead-still. */
+index(r){ let s=G('ix',[[0,'#20242c'],[.5,'#2e343e'],[1,'#3a4048']])+rect(0,0,W,H,'url(#ix)');
+  /* rows and columns of little labelled drawers, receding */
+  for(let row=0;row<7;row++){ const y=70+row*62, sc=1-row*0.04;
+    for(let col=0;col<12;col++){ const x=40+col*(W-80)/11;
+      s+=`<g transform="translate(${x},${y}) scale(${sc})">`+rect(-26,-22,52,40,'#3e444e',1)
+        +`<rect x="-26" y="-22" width="52" height="40" fill="none" stroke="${INK}" stroke-width="1.4"/>`
+        +circ(0,4,3,'#20242c')+line(-16,-10,16,-10,'#5a626c',2,.7)+`</g>`; }
+  }
+  /* one drawer, half-open, with a scrap of impossible colour escaping */
+  s+=rect(W/2-26,318,52,40,'#4a505a',1)+`<rect x="${W/2-26}" y="318" width="52" height="40" fill="none" stroke="${INK}" stroke-width="1.6"/>`;
+  s+=path(`M${W/2-10},330 q10,-14 22,-4 q-6,10 -22,4 z`,'#c0392b',INK,1.2);   /* the one red rose, filed away */
+  s+=alice(W/2,470,110,'#232830');
+  return s+frame('#5a626c');},
 };
 P.riverbank=P.wake;
 

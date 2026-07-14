@@ -4,15 +4,17 @@
 
 **▶ Play: https://kylefriesmarketing.github.io/alice/**
 
-You are Alice. You followed a waistcoated rabbit down a hole and the world stopped making sense.
-You are the wrong size for every room, every creature answers a question with a worse one, and the
-longer you stay the harder it is to remember your own name. **You cannot win Wonderland. You can
-only wake — and the trick is to wake as yourself.**
+You are Alice. You followed a waistcoated rabbit down a hole and the world stopped making sense —
+and now something is quietly *fixing* it. A Registrar is finishing the **Great Index**, to be read
+aloud at the **Last Unbirthday** at midnight: one name for every creature, one answer for every
+riddle, one meaning for every rule, and anything left undefined erased as an error. **When
+Wonderland begins making sense, everything starts to disappear.**
 
-The dream / nonsense game: the one shape THE SHELF didn't have. Deliberately the opposite of a
-puzzle you solve — here, *being reasonable is usually the trap.*
+You cannot win Wonderland. You can only **wake as yourself** — and keep Wonderland strange enough to
+be worth waking from. Deliberately the opposite of a puzzle you solve: here, *being reasonable is
+usually the trap*, and reason itself is what finishes the Index.
 
-## The four instruments
+## The instruments
 
 - **SIZE** — the star, and unlike any meter on the shelf: **bidirectional**. Too big to fit the
   door, too small to reach the key — *both* extremes are failure, and the right size is fleeting.
@@ -23,19 +25,32 @@ puzzle you solve — here, *being reasonable is usually the trap.*
   you never wake; surface toward the pale light of the riverbank and a fright can jolt you out.
 - **IMPOSSIBLE THINGS** — the impossibilities you accept, catalogued across runs. *Six before
   breakfast* is a milestone — you can't wake *well* from a dream you fought the whole way.
+- **CONTRADICTION** — proof that two impossible things can both be true. Spend it to **break** a
+  Rule Card and keep Wonderland wild. Playing along and believing the impossible earns it.
+- **THE GREAT INDEX** — how much of Wonderland has been corrected into sense. Reasoning and obeying
+  the local rules complete it; nonsense, play and defiance hold it back. When it fills, the Last
+  Unbirthday finishes and nothing may ever change again.
 
-## The nonsense negotiation
+## Rule Cards & the nonsense negotiation
 
-Every creature offers up to three postures. **REASON** is usually the trap (though each room hides
-exactly one grounding truth that cuts through). **PLAY ALONG** is the humble, reliable way, and how
-you gather impossible things. **DEFY** is the growth move — literally — and how you finally wake
-from the trial. Wrong postures are authored branches, never retries.
+Every district shows a **Rule Card** — the local law the Great Index has pinned to it ("no one may
+leave before tea is finished"; "a cat must remain attached to its grin"; "every rose must be the
+approved red"). Every creature offers up to three postures. **REASON** is usually the trap (though
+each room hides exactly one grounding truth that cuts through) — and reason *hardens the Index*.
+**PLAY ALONG** is the humble, reliable way, gathers impossible things, and earns Contradiction.
+**DEFY** is the growth move — literally. And you can **BREAK** a Rule Card outright by spending
+Contradiction: leave the tea table while staying seated, protect a mispainted rose from ever being
+fixed, jam a both-true-and-false line into the Index itself. Wrong choices are authored branches,
+never retries.
 
 ## The wakings
 
-The Riverbank (the true waking) · The Teller (the secret, earned across runs) · Mabel (a hollow
-waking) · The Stay (you never wake) · The Wrong Size Forever · Off With Her Head (the startle). No
-death, ever — a dream has other stakes.
+Eight, rewarding different philosophies, not merely success. **A Wonderland That Changes** (the true
+waking — write "Wonderland is true because it changes" and give the last page away) · **The Teller**
+(the secret, earned across runs) · **The Riverbank** (wake as yourself) · **Off With Her Head** (the
+startle) · **Everything in Its Place** (you let the Registrar win — Wonderland safe, beautiful, and
+unable to surprise anyone again) · **Mabel** (a hollow waking) · **The Wrong Size Forever** · **The
+Stay** (you never wake). No death, ever — a dream has other stakes.
 
 ## Built with
 

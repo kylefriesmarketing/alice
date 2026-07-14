@@ -91,7 +91,9 @@ n_fall2:{ region:'fall', scene:'fall', title:'Thump.',
 
 You are in a long, low hall, lit by a row of lamps hanging from the roof. Ahead the Rabbit's footsteps fade. You came all this way down; there is nothing to do but go on.
 
-<span class="tut">This is a dream. You cannot die here, and you cannot win. You can only find your way back up to waking — and the one thing you truly control is your <em>size</em>. Mind it. Wonderland has built every door to the wrong measurements on purpose.</span>`,
+Except the hall is not quite as you half-remember it. Every door wears a small brass plate now, freshly screwed on, giving its one correct name. A notice on the wall reads: <em>PLEASE DO NOT BE MORE THAN ONE THING AT A TIME.</em> And somewhere far below, very faintly, you can hear a great book being written — one careful, permanent line at a time.
+
+<span class="tut">This is a dream, and Wonderland is being <em>corrected</em> — put in order, made to make sense, before midnight and the Last Unbirthday. You cannot die here, and you cannot win. You can only wake as yourself — and keep Wonderland strange enough to be worth waking from. The one thing you fully control is your <em>size</em>. Mind it. Every door here is built to the wrong measurements on purpose — or was, before they started fixing them.</span>`,
   choices:[
     { t:'Follow, before the last door swings shut.', go:'n_hall' },
   ]},
@@ -99,6 +101,7 @@ You are in a long, low hall, lit by a row of lamps hanging from the roof. Ahead 
 /* ===================== THE HALL OF DOORS / POOL OF TEARS ===================== */
 n_hall:{ region:'hall', scene:'hall', title:'The Hall of Doors',
   epigraph:'how she longed to get out of that dark hall',
+  rule:'The Rule of the Hall (freshly pinned): only the correctly-sized may use a door.',
   gate:{ max:1, onWrong:'n_pool', note:'grown too large for the hall' },
   onArrive:S=>{ if(S.flags.hallSolved) return; },
   text:S=>{
@@ -287,6 +290,7 @@ A path leads off between the trees. It is the only way that is not back. Somewhe
 
 /* ===================== THE WOOD → THE CATERPILLAR ===================== */
 n_wood:{ region:'wood', scene:'caterpillar', title:'A Blue Coil of Smoke',
+  rule:'The Rule of the Wood: every creature must state one fixed identity, and keep it.',
   text:S=>`The wood is cool and green and very quiet, and the path winds until it comes to a great mushroom, taller than you are${S.size<=-1?' — and you are small just now, so it is taller than a house':''}, with something on the top of it.
 
 On the top of it, exactly its own height and perfectly at its ease, sits a large blue Caterpillar, arms folded, smoking a long hookah, and taking not the smallest notice of you or of anything else in the world.
@@ -296,7 +300,7 @@ For a long while it says nothing. Then it takes the hookah out of its mouth, and
 <em>"Who,"</em> it says, <em>"are </em>you<em>?"</em>`,
   choices:[
     { t:'"I— I hardly know, sir, just at present. I knew who I was when I got up this morning, but I think I must have changed several times since then."', kind:'reason', pre:'honest, not stubborn', key:true,
-      note:'it is the truest thing you can say, and saying it keeps you whole; the Caterpillar, though rude, does not let you go', self:1, go:'n_cat_poem' },
+      note:'it is the truest thing you can say, and saying it keeps you whole; the Caterpillar, though rude, does not let you go', self:1, honest:true, journal:'I did not know exactly who I was, and I said so, and it was true.', go:'n_cat_poem' },
     { t:'"Who are YOU? You are only a caterpillar three inches high, and you have no business asking."', kind:'reason', pre:'the trap: pull rank',
       note:'you define yourself by looking down on something small, and lose a little of your own footing; the smoke chills', self:-1, waking:-1, go:'n_cat_poem' },
     { t:'Answer its impossible questions on their own terms — riddle for riddle, nonsense for nonsense, quite unbothered.', kind:'play', pre:'the way through',
@@ -393,6 +397,7 @@ It made a far handsomer pig than it ever did a baby.`;
       note:'the wood does not answer; the pig does not come back; you have won an argument with nobody', self:-1, waking:-1, go:'n_kitchen_cat' },
   ]},
 n_kitchen_cat:{ region:'kitchen', scene:'cheshire', title:'The Grin on the Bough',
+  rule:'The Rule of the Wood (Index-approved): a cat must remain attached to its grin.',
   text:`A few yards off, in the branches of a tree, sits the grinning Cat from the hearth. It has very long claws and a great many teeth, all of them showing, so you decide to treat it with respect.
 
 <em>"Cheshire Puss,"</em> you begin, a little timidly, <em>"would you tell me, please, which way I ought to go from here?"</em>
@@ -434,6 +439,7 @@ Then it begins to vanish again, and asks, kindly, whether you have decided where
 /* ===================== THE MAD TEA-PARTY (purest posture room) ===================== */
 n_tea:{ region:'teaparty', scene:'teaparty', title:'No Room! No Room!',
   epigraph:'have some wine, said the March Hare (there was no wine)',
+  rule:'The Rule of the Table (pinned by the Index): no one may leave before tea is finished — and tea is never finished.',
   text:`A table set out under a tree in front of the house, and a great many cups crowded down one end of it, and three of them making the most of the crowd: a Hatter, a March Hare, and a Dormouse fast asleep between them, which the other two are using as a cushion for their elbows.
 
 <em>"No room! No room!"</em> they cry the moment they see you.
@@ -448,6 +454,8 @@ n_tea:{ region:'teaparty', scene:'teaparty', title:'No Room! No Room!',
       note:'the Hatter almost smiles; the Hare passes the butter; you are, briefly, one of them, in the good way', add:'a riddle that was never meant to have an answer', waking:1, go:'n_tea_time' },
     { t:'"Time isn\'t a thing you can quarrel with — and you\'ve been quarrelling with it." Say it gently. It is why the clock stopped.', kind:'reason', pre:'the grounding truth', key:true,
       note:'the Hatter goes quiet; it is the truest thing said at this table in a hundred years of tea; he quarrelled with Time and Time stopped for him at six, and you can see he knows it', self:1, waking:1, go:'n_tea_time' },
+    { t:'Leave the table without leaving it — get up and go while your teacup stays warm in your still-occupied chair, and let the two facts argue behind you.', rule:'break', cost:1, req:s=>s.contradiction>=1,
+      note:'you spend a contradiction, and for one glorious impossible moment you are both seated and gone; the Hatter, who has spent a hundred years unable to do exactly this, applauds', add:'being both at the table and away from it, at once', self:1, waking:1, fx:s=>s.flags.teaDone=1, go:'n_tea_leave' },
   ]},
 n_tea_time:{ region:'teaparty', scene:'teaparty', title:'Always Six O\'Clock',
   text:`The Hatter tells you, as if it explained everything, that it is always six o'clock now. He quarrelled with Time back in March — murdered the time, the Queen said, when he was singing — and ever since, Time won't do a thing the Hatter asks, and it stays six o'clock, tea-time, forever, with never a minute's pause to wash the cups.
@@ -498,6 +506,7 @@ In the trunk of one of the trees there is a door. You have grown wise about door
 /* ===================== THE QUEEN'S CROQUET-GROUND ===================== */
 n_croquet:{ region:'croquet', scene:'croquet', title:'The Roses Are the Wrong Colour',
   epigraph:'off with her head!',
+  rule:'The Rule of the Garden: every rose must be the one approved red; every colour must have one name.',
   onArrive:S=>{ if(S.size<0) S.size=0; },
   text:`The garden at last — and it was never as calm as it looked through the little door. By the entrance stands a great rose-tree bearing white roses, and three gardeners shaped exactly like playing-cards — flat, oblong, hands and feet at the corners — are busily painting the white roses red, in a great hurry, and getting a good deal of the paint on one another and on the grass.
 
@@ -507,6 +516,8 @@ You ask why, and the Two of Spades says, low and frightened, that they planted a
       note:'you understand the whole cruel little kingdom in a glance — it runs on fear, and paint, and a word that is never actually carried out; seeing the lie clearly steadies you', self:1, waking:1, go:'n_croquet_game' },
     { t:'Play her game. Take a flamingo for a mallet and a hedgehog for a ball and join the maddest croquet ever played, all out of turn and all at once.', kind:'play', pre:'the way through',
       note:'the flamingo will not keep its neck straight and the hedgehog keeps unrolling and walking off, and the soldiers who make the arches get up and wander, and it is glorious nonsense', add:'a croquet of live flamingos and hedgehogs that will not hold still', waking:1, go:'n_croquet_game' },
+    { t:'Kneel by one white rose the gardeners missed and declare it an <em>official exception</em> — a rose allowed, by special decree, to be exactly the wrong colour forever.', rule:'break', cost:1, req:s=>s.contradiction>=1,
+      note:'you spend a contradiction to carve a hole in the Index itself — one protected impossibility the Great Book cannot correct; the terrified gardeners will guard it with their lives', add:'a mispainted rose, protected by law from ever being fixed', self:1, go:'n_croquet_game' },
     { t:'Tell the Queen, to her face, that painting roses and shouting "off with her head" is a childish way to run a garden.', kind:'defy', pre:'stand your ground — early', req:s=>s.self>=3,
       note:'the whole court holds its breath; the Queen goes purple; you are not ready to end it here and now, and defiance without the final ground beneath it just earns you a death-sentence nobody quite carries out — this time', self:-1, waking:-1, go:'n_croquet_condemned' },
   ]},
@@ -553,19 +564,22 @@ n_mock_out:{ region:'mockturtle', scene:'mockturtle', title:'A Trumpet in the Di
   ]},
 
 /* ===================== THE TRIAL — the climax ===================== */
-n_trial:{ region:'trial', scene:'trial', title:'Who Stole the Tarts?',
+n_trial:{ region:'trial', scene:'trial', title:'The Last Unbirthday',
   epigraph:'she had never been in a court of justice before',
+  rule:'The Rule of the Court: the sentence must be known before the evidence — the last rule the Great Index still needs to file.',
   onArrive:S=>{ S.flags.atTrial=1; },
-  text:`The King and Queen of Hearts sit on their throne, and before them a great crowd — the whole pack of cards, and every bird and beast of the day, and the White Rabbit with a trumpet in one hand and a scroll in the other. In the middle, on a dish, a plate of tarts, so beautiful they make your mouth water. The charge: the Knave of Hearts has stolen them.
+  text:S=>`The courtroom is the antechamber of the Last Unbirthday. At the back of the hall, taller than the throne, the Great Index turns on itself like a cathedral built of card-catalogue drawers — and beside it stands the <em>Registrar</em>, patient and courteous and almost kind, waiting for midnight, when it will read the Index aloud and every name and road and riddle in Wonderland will become final, and correct, and unable to change, forever.
 
-The evidence is nonsense, and knows it. A witness who cannot stop trembling; a jury of small creatures writing down their own names in case they forget them before the end; the King, who is also the judge, inventing law as he goes — <em>"Rule Forty-two: all persons more than a mile high to leave the court."</em>
+${S.index>=6?'The reading has all but begun. The roses have gone the one approved red; the cards stand in numbered rows; the air is orderly and quiet and just slightly dead. You are nearly too late.':'But first there is one last piece of nonsense to file.'} The King and Queen of Hearts sit in judgement; the whole pack of cards and every creature of the day are crowded in; on a dish sits a plate of stolen tarts. The evidence is gibberish and knows it — a trembling witness, a jury writing down their own names in case they forget, the King inventing law as he goes: <em>"Rule Forty-two: all persons more than a mile high to leave the court."</em>
 
-Which is when you notice that you are growing. Not by mushroom, not by cake — on your own, without choosing it, the dream's grip loosening its fingers one at a time, and you are getting larger, and larger, and it feels like waking up.`,
+Which is when you notice you are growing. Not by mushroom, not by cake — on your own, the dream's grip loosening finger by finger, and you rise toward the ceiling and the light, and the Registrar looks up at you with something almost like hope, and almost like fear, as if it half-remembers having been your size, once, a very long time ago.`,
   onArriveGrow:true,
   choices:S=>{
     const c=[];
     c.push({ t:'"There\'s nothing written on that paper — it isn\'t evidence at all." Say it clearly, into the nonsense, a true thing in a room built to keep truth out.', kind:'reason', pre:'the grounding truth', key:true,
       note:'the court blusters; the King flounders; and the plain fact of it stands there unanswerable, and you feel yourself grow another foot toward the ceiling and the light', self:1, waking:2, size:1, go:'n_trial' });
+    if(S.contradiction>=2) c.push({ t:'Slip one contradiction into the Great Index itself — a single line that is both perfectly true and perfectly false — so the Book snags on it and can never finish reading.', rule:'break', cost:2, req:s=>s.contradiction>=2,
+      note:'you spend two contradictions; the Registrar\'s machinery shudders and stalls on the impossible line, and the whole cathedral of drawers hangs open, unfinishable — Wonderland has room to breathe again', index:-3, self:1, add:'a line in the Index that is both true and false at once', go:'n_trial' });
     c.push({ t:'Play the trial as the theatre it is — testify in perfect nonsense, out-mad the mad court, and let the whole absurd machine run.', kind:'play', pre:'the way through',
       add:'a jury of twelve creatures all wrong at once', waking:1, go:'n_trial_verdict' });
     if(S.self>=4)
@@ -603,7 +617,11 @@ n_trial_defy:{ region:'trial', scene:'trial', title:'Nothing But a Pack of Cards
     { t:'And the whole pack rises into the air and comes flying down at you—', pre:'the dream comes apart',
       end: (S,P)=>{
         const many = S.impossibleThings.length;
+        const wild = S.index<=2;                     // you kept Wonderland from being corrected
+        const changesReady = wild && many>=4 && S.self>=4 && S.flags.honestUncertainty;
         const tellerReady = P && P.impossibleEver && Object.keys(P.impossibleEver).length>=8 && S.self>=5 && many>=6;
+        if(S.index>=7) return 'e_index';             // the Great Index all but finished — even this is filed
+        if(changesReady) return 'e_changes';         // the deepest waking: Wonderland kept, by letting it change
         if(tellerReady) return 'e_teller';
         if(S.self>=4 && many>=4) return 'e_riverbank';
         return 'e_startle';
@@ -693,6 +711,28 @@ Somewhere far above, on a bank you can no longer remember, a sister shakes a sle
 
 Have some tea. There's plenty of room. There always was.`,
   },
+  e_index:{ kind:'index', scene:'index', title:'Everything in Its Place',
+    verse:'Wonderland was saved. It only stopped being Wonderland to do it.',
+    text:`Midnight. The Registrar reads the last line of the Great Index aloud, and Wonderland holds still to hear it.
+
+And it is — you have to admit — beautiful. The roses are all the one approved red. The Cheshire Cat sits whole and attached to a grin that no longer wanders. The tea is poured in measured cups and the clock says a quarter past, then twenty past, then half — Time moving at last, obedient, in a straight and reasonable line. Every path is labelled. Every creature has one name. Every riddle has been given its one correct answer, and the answers are all filed, and nothing down here will ever frighten or delight or surprise anyone, ever again, because surprise has been catalogued as an error and gently erased.
+
+You helped. Every rule you obeyed, every impossible thing you argued with instead of believing, was another line finished. The Registrar thanks you, kindly, because it is not a monster — it only wanted to keep the dream safe, and this is what keeping a thing perfectly safe turns out to mean.
+
+You wake. Your sister asks what you dreamed, and you tell her, precisely, completely, every detail correct. And already you can feel it: you will never dream it again. There is nothing left in it that hasn't been decided.`,
+  },
+  e_changes:{ kind:'change', scene:'wake', title:'A Wonderland That Changes',
+    verse:'Wonderland is true because it changes. Keep it by letting it go.',
+    text:S=>`Midnight, and the Registrar hands you the pen to write the final definition of Wonderland — one sentence, exact, forever.
+
+And you understand it, finally, all at once: the Registrar is you. An older, frightened you, who started a Book of Exact Remembering because she felt Wonderland fading — and who learned, too late, that every messy memory she pinned down with one precise word was a possible Wonderland she quietly killed. The Great Index is nothing but love turned into a cage.
+
+So you do not write the sentence it wants. You write the only true one: <em>"Wonderland is true because it changes."</em> ${S.impossibleThings.length>=6?'You have believed six impossible things before breakfast, and every one of them refuses to hold still, and that is the point of them.':'You have believed enough impossible things to know they were never meant to keep their shape.'}
+
+The Great Index does not burn. It reopens — becomes a book of possible editions, every page pencilled and erasable, the grin free to wander off its cat again, the roses free to come up whatever colour they like. And you give the last blank page not to the Registrar to file, but to the world, to whoever dreams next.
+
+You wake on the warm bank, yourself all the way through, and the final pages of your journal are blank on purpose — room left, for the next time down. The light is still on. It always was.`,
+  },
   e_wrongsize:{ kind:'trapped', scene:'rabbithouse', title:'The Wrong Size Forever',
     verse:'Not hurt. Only kept, by the geometry of the dream.',
     text:`You stop reaching for the cakes. You stop trying to be the right size for the door.
@@ -713,6 +753,7 @@ return {
   SIX_BEFORE_BREAKFAST, TELLER_EVER,
   // starting run state
   newRun(){ return { node:'n_fall', size:0, self:4, waking:6, mushroom:false,
+    contradiction:2, index:3, journal:[],
     impossibleThings:[], seen:{}, flags:{} }; },
 };
 })();
