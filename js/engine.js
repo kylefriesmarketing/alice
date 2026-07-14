@@ -227,6 +227,39 @@ function paintWater(){
   const w=$('waterline'); if(!w) return;
   w.innerHTML=ART.waterline(S.waking);
 }
+/* ---- the Cheshire Cat: the one honest guide, recurring, consultable ---- */
+const CAT_GENERAL=[
+  '“We’re all mad here,” says the grin. “I’m mad. You’re mad. You must be, or you wouldn’t have come.”',
+  '“I don’t much care WHICH way you go,” the Cat allows, “so long as you get somewhere — which you’re bound to, if you only walk long enough.”',
+  '“Oh, you can’t help being mad,” it says, not unkindly. “But you do get some say in which kind. Choose the interesting madness.”',
+  '“Consider the door you’re looking for,” purrs the Cat. “It isn’t a place. It’s a size, and a self, and a moment. You’ll know it.”',
+  '“Everyone here will lie to you charmingly,” the grin observes, “except me. I lie to you plainly, which is nearly the same thing, and much more restful.”',
+];
+function catLine(S){
+  if(S.index>=6) return '“You’ve been terribly reasonable,” the grin says. “The Registrar is grateful. Do try being less sensible — before there’s nothing left to be sensible about.”';
+  if(S.waking<=3) return '“You’re deep,” says the Cat. “Down here even the Queen’s worst is only weather. You’ll have to come up nearer the light before a fright can do you any good.”';
+  if(S.self<=2) return '“There’s less of you than there was, my dear,” it murmurs. “Mind that. A pack of cards is easy to defy; it takes a whole Alice to do the defying.”';
+  if(S.contradiction>=4) return '“You’re fairly bristling with contradiction,” the grin notes. “Rules were made to be broken with exactly that. Don’t hoard it — spend it, and keep us wild.”';
+  if((S.impossibleThings||[]).length>=5) return '“A fine crop of impossible things you’ve swallowed,” says the Cat. “One never wakes WELL from a dream one argued with the whole way. You’re doing beautifully.”';
+  if(S.mushroom && S.size===0) return '“Just your own size, for once,” the grin remarks. “Enjoy it. It won’t last, and it isn’t meant to.”';
+  return CAT_GENERAL[(Math.random()*CAT_GENERAL.length)|0];
+}
+function paintCat(){
+  const btn=$('cat-consult'); if(!btn) return;
+  const show = S && S.book!=='lookingglass' && S.flags && S.flags.metCat;
+  btn.classList.toggle('hidden', !show);
+}
+function askCat(){
+  if(!S) return; const b=$('cat-bubble'); if(!b) return;
+  b.innerHTML=fmt(catLine(S)); b.classList.remove('hidden'); b.classList.add('show');
+  clearTimeout(window.__catTO);
+  window.__catTO=setTimeout(hideCat, 8000);
+}
+function hideCat(){ const b=$('cat-bubble'); if(!b) return;
+  b.classList.remove('show');
+  setTimeout(()=>{ if(!b.classList.contains('show')) b.classList.add('hidden'); },400); }
+if($('cat-consult')) $('cat-consult').onclick=askCat;
+if($('cat-bubble')) $('cat-bubble').onclick=hideCat;
 function changeSize(d){
   if(!S.mushroom) return;
   const before=S.size;
@@ -261,6 +294,8 @@ function render(nodeId, sameNode){
   paintScene($('scene-art'), n.scene||n.region, nodeId+P.runs);
   AUDIO.setScene(n.scene||n.region, S.waking, S.index);
   paintHUD();
+  if(fresh) hideCat();
+  paintCat();
 
   $('region-name').textContent=reg.name;
   $('node-title').textContent=fmt(n.title);

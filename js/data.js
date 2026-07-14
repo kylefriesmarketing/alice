@@ -404,6 +404,7 @@ It made a far handsomer pig than it ever did a baby.`;
   ]},
 n_kitchen_cat:{ region:'kitchen', scene:'cheshire', title:'The Grin on the Bough',
   rule:'The Rule of the Wood (Index-approved): a cat must remain attached to its grin.',
+  onArrive:S=>{ S.flags.metCat=1; },
   text:`A few yards off, in the branches of a tree, sits the grinning Cat from the hearth. It has very long claws and a great many teeth, all of them showing, so you decide to treat it with respect.
 
 <em>"Cheshire Puss,"</em> you begin, a little timidly, <em>"would you tell me, please, which way I ought to go from here?"</em>
