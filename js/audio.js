@@ -35,6 +35,7 @@ const CFG={
   lgboard:    { root:57, drone:[0,4,7],     box:1, mirror:1, bright:1 },
   lgwall:     { root:55, drone:[0,5,7],     box:1, mirror:1 },
   lgcrown:    { root:53, drone:[0,4,7,12],  box:1, mirror:1, march:1, bright:1 },
+  lgwood:     { root:50, drone:[0,7],       box:1, mirror:1, hollow:1 },
 };
 /* the nursery music-box tune (scale degrees over the root, +12 = up an octave) */
 const NURSERY=[12,16,19,16,12,14,15,14, 12,16,19,24,19,16,12,7];

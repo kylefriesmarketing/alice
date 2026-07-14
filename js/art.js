@@ -277,6 +277,19 @@ lgcrown(r){ let s=G('lgc',[[0,'#2a1420'],[.5,'#5a2430'],[1,'#3a1820']])+rect(0,0
   s+=alice(W/2,H-98,150,'#1a0e14');
   s+=path(`M${W/2-28},${H-98-134} l13,-19 l15,13 l15,-13 l13,19 z`,'#e8c84a',INK,1.6);  /* her crown */
   return s+frame('#e8c84a');},
+
+lgwood(r){ let s=G('lgd',[[0,'#10160f'],[.5,'#1a241a'],[1,'#0c120c']])+rect(0,0,W,H,'url(#lgd)');
+  for(let i=0;i<15;i++){ const x=r()*W, w=12+r()*30, h=H*(.5+r()*.5);
+    s+=rect(x,H-h,w,h,'#0a100a',.92);
+    s+=path(`M${x+w/2},${H-h} q${(r()-.5)*40},-36 ${(r()-.5)*28},-86`,null,'#0a100a',6,.55); }
+  s+=RG('lgdg',[[0,'#6a7a5a',.28],[1,'#000',0]])+`<ellipse cx="${W*0.5}" cy="${H*0.56}" rx="210" ry="120" fill="url(#lgdg)"/>`;
+  s+=alice(W*0.44, H-56, 128, '#0c120c');
+  /* the fawn walking beside her */
+  s+=`<g transform="translate(${W*0.57},${H-56})">`+
+    path(`M0,0 q-6,-38 8,-44 q10,-4 12,4 l16,-2 q6,0 4,6 l-8,4 q4,28 -6,32 z`,'#141a12')+
+    line(-3,0,-5,24,'#141a12',3)+line(20,0,22,24,'#141a12',3)+
+    path(`M30,-38 l6,-13 M34,-38 l11,-9`,null,'#141a12',3)+`</g>`;
+  return s+frame('#3a4a33');},
 };
 P.riverbank=P.wake;
 

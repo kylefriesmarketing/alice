@@ -90,9 +90,36 @@ A tiny Gnat, no bigger than a chicken by your ear, murmurs the joke of it. And t
 You could insist on doing this properly: a ticket, a label, a fixed name and destination like a sensible traveller. Or you could let the leap simply take you.`,
   choices:[
     { t:'Insist on being ticketed and labelled and set right — sort out who you are and where you are going before you let the train move.', pre:'forwards — the trap', kind:'reason', fail:true,
-      note:'the passengers file you eagerly, and being filed is exactly what you are trying not to be in this book; the leap happens anyway, but it drags you', waking:-1, size:0, go:'lg_tweedles' },
+      note:'the passengers file you eagerly, and being filed is exactly what you are trying not to be in this book; the leap happens anyway, but it drags you', waking:-1, size:0, go:'lg_wood' },
     { t:'Let the leap take you — unticketed, unlabelled, two squares at a bound over the brook.', pre:'the mirror-move', kind:'play', key:true,
-      note:'you go up with the whole carriage, clear over the brook, and come down changed and free of every label they tried to pin on you — on the Fourth Square', self:1, add:'a leap of two squares over a brook, with no ticket at all', go:'lg_tweedles' },
+      note:'you go up with the whole carriage, clear over the brook, and come down changed and free of every label they tried to pin on you — on the Fourth Square', self:1, add:'a leap of two squares over a brook, with no ticket at all', go:'lg_wood' },
+  ]},
+
+/* ---------- square 4: the wood where things have no names ---------- */
+lg_wood:{ region:'lg_wood', scene:'lgwood', title:'The Wood With No Names',
+  onArrive:S=>{ if(S.square<4) S.square=4; S.flags.walkedNameless=1; },
+  epigraph:'this must be the wood where things have no names',
+  text:`You come down off the leap into a wood so dark and dense and still that the light itself seems to have forgotten the way in. And here — gently, the way sleep comes — you begin to forget.
+
+First the name of the wood. Then the name of the tree you put your hand against, though you can feel its bark plainly. Then, with a small cold lurch, you cannot think what to call the little animal that has come up soft beside you — and, worst and last, you cannot for the life of you remember your <em>own</em> name. It is on the tip of everything and gone.
+
+The little creature — a Fawn, though neither of you knows the word — is not afraid of you, because it has forgotten that it is the kind of thing that should be. It lays its soft neck against your arm and walks with you, the two of you nameless and easy together, deeper into the quiet, and it is the most peaceful you have felt in either dream — and also, somewhere underneath, the most lost.`,
+  choices:[
+    { t:'Fight to get your name back — say it over and over in your head, grab at it, refuse to take one more step until you can remember who you are.', pre:'forwards — the trap', kind:'reason', fail:true,
+      note:'the harder you clutch at it the faster it slides, and the clutching frightens you, and fright is a loud thing in a wood that runs on quiet; you keep your name, barely, but it costs you to hold it by force', self:-1, waking:-1, go:'lg_wood2' },
+    { t:'Let the name go. Walk easy beside the Fawn, nameless and unafraid, and trust that what you are does not actually depend on being able to say it.', pre:'the mirror-move', kind:'play', key:true,
+      note:'you stop clutching, and walk, and the peace of it is enormous — and this is the deepest lesson of the glass and of a great deal else: you do not stop being yourself just because you cannot, for a little while, say your own name', self:1, waking:1, add:'a self that survived having no name at all', journal:'In the nameless wood I let my own name go, and walked on, and was still myself.', go:'lg_wood2' },
+    { t:'Ask the Fawn, without words, what IT is — and delight that neither of you has the faintest idea, and that it does not seem to matter in the least.', pre:'the mirror-move', kind:'play',
+      note:'the Fawn considers the question it cannot understand with its large soft eyes, and has no answer, and is perfectly happy without one; you have never been asked to name a friend before agreeing to have one', add:'a friend you loved before you knew what either of you was called', go:'lg_wood2' },
+  ]},
+lg_wood2:{ region:'lg_wood', scene:'lgwood', title:'Out the Far Side',
+  text:S=>`You come out together into the open at last, into a field where the light remembers itself — and all at once, so do you both.
+
+<em>"I'm a Fawn!"</em> it cries out, in a voice of sudden delight — and then, as the next word lands, of sudden terror — <em>"and, dear me! you're a human child!"</em> And it is gone, bounded away across the field in a single frightened leap, and you are left standing in the returning sunlight with your own name back in your mouth${S.flags.mirrorFail?', held a little too tightly,':''} and a small warm grief where a nameless friend used to be walking at your side.
+
+You will not forget the Fawn. That is the joke of the wood, and its kindness: the one thing you keep from the place where nothing had a name is the memory of something you loved there.`,
+  choices:[
+    { t:'Walk on toward the fat little men arguing under their tree — you can hear them from here.', go:'lg_tweedles' },
   ]},
 
 /* ---------- square 4: Tweedledum and Tweedledee ---------- */
