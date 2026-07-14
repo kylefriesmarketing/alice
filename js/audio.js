@@ -30,6 +30,11 @@ const CFG={
   trial:      { root:53, drone:[0,1,6],    box:0, march:1, tense:1 },
   wake:       { root:60, drone:[0,4,7,12], box:1, sweet:1, resolve:1 },
   dark:       { root:48, drone:[0,1],      box:1, hollow:1 },
+  /* Through the Looking-Glass — the music-box plays the nursery tune in RETROGRADE (mirror:1) */
+  lgmirror:   { root:60, drone:[0,7,12],   box:1, sweet:1, mirror:1 },
+  lgboard:    { root:57, drone:[0,4,7],     box:1, mirror:1, bright:1 },
+  lgwall:     { root:55, drone:[0,5,7],     box:1, mirror:1 },
+  lgcrown:    { root:53, drone:[0,4,7,12],  box:1, mirror:1, march:1, bright:1 },
 };
 /* the nursery music-box tune (scale degrees over the root, +12 = up an octave) */
 const NURSERY=[12,16,19,16,12,14,15,14, 12,16,19,24,19,16,12,7];
@@ -85,10 +90,11 @@ function bell(f,v,d,t){ if(!ctx||muted) return; const now=ctx.currentTime;
 function scheduleBox(cfg){
   if(boxTimer) clearTimeout(boxTimer);
   let i=0;
+  const SEQ = cfg.mirror ? NURSERY.slice().reverse() : NURSERY;   /* Looking-Glass: the tune runs backwards */
   const step=()=>{ if(!current||!cfg.box) return;
     const w=wrongness();
     const st=curIndex/8;                                     /* the Great Index: 0 wild … 1 corrected */
-    const deg=NURSERY[i%NURSERY.length];
+    const deg=SEQ[i%SEQ.length];
     /* sinking curdles the box warm-WRONG; the Index sterilises it cold-RIGHT (perfectly
        in tune, perfectly on time — and dead). The two pull against each other. */
     const detune = (Math.random()*2-1)*w*45*(1-st);          /* index files the wrong-tuning flat */

@@ -592,6 +592,8 @@ Which is when you notice you are growing. Not by mushroom, not by cake — on yo
       note:'you spend two contradictions; the Registrar\'s machinery shudders and stalls on the impossible line, and the whole cathedral of drawers hangs open, unfinishable — Wonderland has room to breathe again', index:-3, self:1, add:'a line in the Index that is both true and false at once', go:'n_trial' });
     c.push({ t:'Remember the sentence you wrote once, in a dream you woke from well, and never quite stopped believing: <em>"Wonderland is true because it changes."</em> Hold it ready for the Registrar.', margin:true, pre:'from another dream', req:(s,p)=>p&&p.marginNotes&&p.marginNotes.changes,
       note:'the words come back to you whole, carried up out of an earlier waking; you did not have to find them again, and having them ready steadies your hand for what comes', self:1, waking:1, honest:true, go:'n_trial' });
+    c.push({ t:'Stand the way you once stood at a coronation feast on the far side of a mirror — crowned, and rattled, and entirely yourself — and refuse to lose your head in this court as you did not lose it at that table.', margin:true, pre:'from another glass', req:(s,p)=>p&&p.marginNotes&&p.marginNotes.crowned,
+      note:'you have worn a crown through madness worse than this; the memory of keeping your head at the maddest feast in the Looking-Glass steadies you now in the maddest court in Wonderland', self:1, waking:1, go:'n_trial' });
     c.push({ t:'Play the trial as the theatre it is — testify in perfect nonsense, out-mad the mad court, and let the whole absurd machine run.', kind:'play', pre:'the way through',
       add:'a jury of twelve creatures all wrong at once', waking:1, go:'n_trial_verdict' });
     if(S.self>=4)

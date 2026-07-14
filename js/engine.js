@@ -25,6 +25,8 @@ const MARGIN_NOTES={
   honest: 'You wrote, once: "I did not know who I was, and said so."',
   index:  'You remember how it ends if you let it: grey drawers, a filed rose.',
   changes:'You wrote, once: "Wonderland is true because it changes."',
+  mirror: 'You once learned to read a whole world backwards, in a glass.',
+  crowned:'You crossed the Looking-Glass board once, and were crowned a Queen.',
 };
 function loadP(){ try{ const p=JSON.parse(localStorage.getItem(K_P));
   if(p){ const d=defP(); const o=Object.assign(d,p);
@@ -405,6 +407,8 @@ function ending(id){
   if(S.flags.honestUncertainty) P.marginNotes.honest=1;
   if(id==='e_index') P.marginNotes.index=1;
   if(id==='e_changes'||id==='e_teller') P.marginNotes.changes=1;
+  if(S.book==='lookingglass') P.marginNotes.mirror=1;
+  if(id==='lg_queen') P.marginNotes.crowned=1;
   saveP(); clearRun();
 
   AUDIO.sting(e.kind);
