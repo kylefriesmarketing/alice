@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>CURIOUSER — Alice's Adventures, playable</title>
+<meta name="description" content="You are Alice, and the world has stopped making sense. You cannot win Wonderland — you can only wake, and the trick is to wake as yourself. A branching book of dream and nonsense, for THE SHELF.">
+<meta name="theme-color" content="#1a1030">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="THE SHELF">
+<meta property="og:title" content="CURIOUSER — Alice's Adventures, playable">
+<meta property="og:description" content="You are the wrong size for every room, every creature answers a question with a worse one, and the longer you stay the harder it is to remember your own name. You can't win a dream. You can only wake as yourself.">
+<meta property="og:url" content="https://kylefriesmarketing.github.io/alice/">
+<meta property="og:image" content="https://kylefriesmarketing.github.io/alice/assets/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="CURIOUSER — Alice's Adventures, playable">
+<meta name="twitter:description" content="A dream you must move through without losing yourself. Size is bidirectional; reason is usually the trap; the goal is to wake, not to win.">
+<meta name="twitter:image" content="https://kylefriesmarketing.github.io/alice/assets/og.jpg">
+<link rel="stylesheet" href="css/style.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M6 20 Q16 30 26 20' stroke='%23f4ecd8' stroke-width='2.4' fill='none'/%3E%3Cline x1='10' y1='21' x2='10' y2='26' stroke='%23f4ecd8' stroke-width='2'/%3E%3Cline x1='16' y1='22' x2='16' y2='27' stroke='%23f4ecd8' stroke-width='2'/%3E%3Cline x1='22' y1='21' x2='22' y2='26' stroke='%23f4ecd8' stroke-width='2'/%3E%3Ccircle cx='10' cy='11' r='2.4' fill='%239be0b0'/%3E%3Ccircle cx='22' cy='11' r='2.4' fill='%239be0b0'/%3E%3C/svg%3E">
+</head>
+<body>
+<div id="app">
+
+  <div id="title-screen" class="screen">
+    <div id="title-art"></div>
+    <div class="title-inner">
+      <div class="title-eyebrow">a dream · down the rabbit-hole · one warm afternoon</div>
+      <h1 class="game-title">CURIOUSER</h1>
+      <div class="title-sub">Alice's Adventures, playable</div>
+      <div id="title-song" class="title-song"></div>
+      <div class="title-menu">
+        <button id="btn-begin" class="menu-btn">Fall Down the Hole</button>
+        <button id="btn-continue" class="menu-btn hidden">Back Into the Dream</button>
+        <button id="btn-impossible" class="menu-btn small">Six Impossible Things</button>
+        <button id="btn-wakings" class="menu-btn small">How the Dream Ends</button>
+        <button id="btn-cast" class="menu-btn small">All Mad Here</button>
+      </div>
+      <div class="shelf-line">part of <a class="shelf-link" href="https://kylefriesmarketing.github.io/games/" target="_blank" rel="noopener">THE SHELF</a></div>
+      <div class="title-foot">after <em>Alice's Adventures in Wonderland</em> by Lewis Carroll &middot; press <kbd>~</kbd> for the pool of tears &middot; <kbd>m</kbd> mutes</div>
+    </div>
+  </div>
+
+  <div id="gallery" class="screen overlay hidden">
+    <div class="gallery-box">
+      <h2 id="gallery-title"></h2>
+      <div id="gallery-body"></div>
+      <button id="gallery-close" class="menu-btn small">Return</button>
+    </div>
+  </div>
+
+  <div id="game-screen" class="screen hidden">
+    <div id="scene-wrap">
+      <div id="scene-art"></div>
+      <div id="waterline" aria-hidden="true"></div>
+    </div>
+    <div id="hud"></div>
+    <div id="story-layer">
+      <div id="text-panel" aria-live="polite" role="region" aria-label="The dream">
+        <div id="region-name"></div>
+        <div id="node-epigraph"></div>
+        <div id="node-title"></div>
+        <div id="node-text"></div>
+        <div id="consumables" role="group" aria-label="Things on the table"></div>
+        <div id="choices" role="group" aria-label="What you do — press 1 through 9 to choose"></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="ending-screen" class="screen hidden">
+    <div id="ending-art"></div>
+    <div class="ending-inner">
+      <div id="ending-kind"></div>
+      <h2 id="ending-title"></h2>
+      <div id="ending-text"></div>
+      <div id="ending-tally"></div>
+      <div id="ending-verse"></div>
+      <button id="btn-share" class="menu-btn small" style="margin-bottom:10px">⎘ Tell the Dream</button>
+      <button id="btn-again" class="menu-btn">Wake, and Fall Again</button>
+    </div>
+  </div>
+
+  <div id="debug-panel" class="hidden"></div>
+  <div id="grain" aria-hidden="true"></div>
+</div>
+
+<script src="js/data.js"></script>
+<script src="js/images.js"></script>
+<script src="js/art.js"></script>
+<script src="js/audio.js"></script>
+<script src="js/engine.js"></script>
+</body>
+</html>
