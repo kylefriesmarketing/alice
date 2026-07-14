@@ -261,6 +261,15 @@ em{font-style:italic;color:#fff}
   font-family:var(--sans);font-style:normal;font-size:9.5px;letter-spacing:.2em;
   text-transform:uppercase;color:var(--faint);margin-bottom:6px}
 
+/* the JOURNAL — Alice's own words, on the ending screen and in the gallery */
+#ending-journal{max-width:600px;margin:0 auto 22px;display:flex;flex-direction:column;gap:7px}
+#ending-journal:empty{display:none}
+.ej-lab{font-family:var(--sans);font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--faint);margin-bottom:2px}
+.ej-list{display:flex;flex-direction:column;gap:9px;margin-top:2px}
+.ej-line{font-family:var(--serif);font-style:italic;font-size:14.5px;color:var(--bone-dim);line-height:1.5;
+  border-left:2px solid rgba(232,200,74,.4);padding:3px 0 3px 13px;text-align:left}
+
 /* debug */
 #debug-panel{position:fixed;bottom:8px;left:8px;z-index:99;background:#100a1cee;
   border:1px solid var(--line);border-radius:8px;padding:11px;font-family:var(--sans);
@@ -275,10 +284,18 @@ em{font-style:italic;color:#fff}
 
 @media(max-width:640px){
   #hud{top:6px;left:6px}
-  .hud-panel{padding:7px 9px 8px;gap:5px}
-  .self-pips i{width:7.5px;height:7.5px}
+  .hud-panel{padding:6px 8px 7px;gap:4px;max-height:84vh;overflow:auto;
+    background:linear-gradient(160deg,rgba(24,16,38,.82),rgba(13,8,22,.66))}
+  .hud-panel::-webkit-scrollbar{width:0}
+  .self-pips i,.contra-pips i{width:7px;height:7px}
+  .size-gauge{width:46px;height:80px}
+  .size-ctrl button{width:22px;height:21px;font-size:13px}
+  .size-ctrl .sz-word{min-width:42px;font-size:9px}
+  .index-bar{width:54px}
+  .hlab{font-size:8px}
   #story-layer{padding:0 8px 2vh}
-  #text-panel{max-height:70vh;padding:16px 16px 18px;border-radius:10px}
+  #text-panel{max-height:64vh;padding:16px 16px 18px;border-radius:10px}
+  #rulecard{padding:8px 11px}
   .game-title{font-size:clamp(40px,13vw,72px)}
 }
 @media (prefers-reduced-motion: reduce){

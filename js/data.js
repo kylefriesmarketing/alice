@@ -318,7 +318,7 @@ It is frightening, a little, to feel your own memory rewrite itself while you wa
     { t:'Force it. Insist on the real words. Say them louder, slower, correctly, until the poem behaves.', kind:'reason', pre:'fight the wrongness',
       note:'the harder you push, the wronger it comes; fighting the dissolution is how you feed it', self:-1, waking:-1, go:'n_cat_gift' },
     { t:'Let the nonsense-poem be what it wants to be. Laugh at Father William and his eel. In a dream your own memory rewrites itself — so let it.', kind:'play', pre:'meet it with humour', key:false,
-      note:'you meet the dissolution with a laugh instead of a panic, and that — the whole game in one breath — is how you keep yourself', self:1, waking:1, add:'my own poem, cheerfully rewritten', go:'n_cat_gift' },
+      note:'you meet the dissolution with a laugh instead of a panic, and that — the whole game in one breath — is how you keep yourself', self:1, waking:1, add:'my own poem, cheerfully rewritten', journal:'My old poem came out wrong, and I laughed instead of correcting it.', go:'n_cat_gift' },
   ]},
 n_cat_gift:{ region:'wood', scene:'caterpillar', title:'One Side, and the Other',
   grantsMushroom:true,
@@ -417,7 +417,7 @@ You try again. <em>"But I don't want to go among mad people."</em>
 <em>"You must be,"</em> says the Cat, <em>"or you wouldn't have come here."</em>`,
   choices:[
     { t:'Watch the Cat vanish — slowly, tail first, until nothing is left but the grin hanging in the air — and believe your own eyes.', kind:'play', pre:'the keystone impossible thing',
-      note:'a grin with no cat behind it; you have seen a good many odd things, but never that, and you let yourself simply believe it', add:'a grin with no cat left behind it', waking:2, fx:s=>s.flags.sawGrin=1, go:'n_cheshire_fork' },
+      note:'a grin with no cat behind it; you have seen a good many odd things, but never that, and you let yourself simply believe it', add:'a grin with no cat left behind it', waking:2, journal:'I watched a cat leave its grin behind, and I believed my own eyes.', fx:s=>s.flags.sawGrin=1, go:'n_cheshire_fork' },
     { t:'Insist the grinning is impossible without a cat, and demand the Cat stay whole while it talks to you.', kind:'reason', pre:'the trap',
       note:'"well, I\'ve often seen a cat without a grin," you say, "but a grin without a cat!" — and the Cat, amused, vanishes anyway, and you have learned nothing except that you cannot make the dream be reasonable', self:-1, go:'n_cheshire_fork' },
   ]},
@@ -453,7 +453,7 @@ n_tea:{ region:'teaparty', scene:'teaparty', title:'No Room! No Room!',
     { t:'Answer the riddle with a riddle of your own, and take more tea though you\'ve had none, and let the nonsense be a game you are playing rather than a test you are failing.', kind:'play', pre:'the way through',
       note:'the Hatter almost smiles; the Hare passes the butter; you are, briefly, one of them, in the good way', add:'a riddle that was never meant to have an answer', waking:1, go:'n_tea_time' },
     { t:'"Time isn\'t a thing you can quarrel with — and you\'ve been quarrelling with it." Say it gently. It is why the clock stopped.', kind:'reason', pre:'the grounding truth', key:true,
-      note:'the Hatter goes quiet; it is the truest thing said at this table in a hundred years of tea; he quarrelled with Time and Time stopped for him at six, and you can see he knows it', self:1, waking:1, go:'n_tea_time' },
+      note:'the Hatter goes quiet; it is the truest thing said at this table in a hundred years of tea; he quarrelled with Time and Time stopped for him at six, and you can see he knows it', self:1, waking:1, journal:'I told the Hatter that Time is not a thing you can quarrel with.', go:'n_tea_time' },
     { t:'Leave the table without leaving it — get up and go while your teacup stays warm in your still-occupied chair, and let the two facts argue behind you.', rule:'break', cost:1, req:s=>s.contradiction>=1,
       note:'you spend a contradiction, and for one glorious impossible moment you are both seated and gone; the Hatter, who has spent a hundred years unable to do exactly this, applauds', add:'being both at the table and away from it, at once', self:1, waking:1, fx:s=>s.flags.teaDone=1, go:'n_tea_leave' },
   ]},
@@ -513,7 +513,7 @@ n_croquet:{ region:'croquet', scene:'croquet', title:'The Roses Are the Wrong Co
 You ask why, and the Two of Spades says, low and frightened, that they planted a white rose-tree by mistake where the Queen wanted red, and if she finds out, they will all lose their heads. And then a trumpet, and a procession — soldiers, courtiers, the King and Queen of Hearts, the whole pack — and the Queen sees the gardeners flat on their faces and the white showing through the wet red paint, and turns the colour of the roses, and screams the only word she knows.`,
   choices:[
     { t:'See the truth of it: the roses are painted. Someone here is so afraid of the Queen they would rather lie in fresh paint than be caught telling her no.', kind:'reason', pre:'the grounding truth', key:true,
-      note:'you understand the whole cruel little kingdom in a glance — it runs on fear, and paint, and a word that is never actually carried out; seeing the lie clearly steadies you', self:1, waking:1, go:'n_croquet_game' },
+      note:'you understand the whole cruel little kingdom in a glance — it runs on fear, and paint, and a word that is never actually carried out; seeing the lie clearly steadies you', self:1, waking:1, journal:'The roses were painted. The whole garden ran on fear, and I saw it.', go:'n_croquet_game' },
     { t:'Play her game. Take a flamingo for a mallet and a hedgehog for a ball and join the maddest croquet ever played, all out of turn and all at once.', kind:'play', pre:'the way through',
       note:'the flamingo will not keep its neck straight and the hedgehog keeps unrolling and walking off, and the soldiers who make the arches get up and wander, and it is glorious nonsense', add:'a croquet of live flamingos and hedgehogs that will not hold still', waking:1, go:'n_croquet_game' },
     { t:'Kneel by one white rose the gardeners missed and declare it an <em>official exception</em> — a rose allowed, by special decree, to be exactly the wrong colour forever.', rule:'break', cost:1, req:s=>s.contradiction>=1,
@@ -577,7 +577,7 @@ Which is when you notice you are growing. Not by mushroom, not by cake — on yo
   choices:S=>{
     const c=[];
     c.push({ t:'"There\'s nothing written on that paper — it isn\'t evidence at all." Say it clearly, into the nonsense, a true thing in a room built to keep truth out.', kind:'reason', pre:'the grounding truth', key:true,
-      note:'the court blusters; the King flounders; and the plain fact of it stands there unanswerable, and you feel yourself grow another foot toward the ceiling and the light', self:1, waking:2, size:1, go:'n_trial' });
+      note:'the court blusters; the King flounders; and the plain fact of it stands there unanswerable, and you feel yourself grow another foot toward the ceiling and the light', self:1, waking:2, size:1, journal:'In the court I said the plain thing: there is nothing written on that paper.', go:'n_trial' });
     if(S.contradiction>=2) c.push({ t:'Slip one contradiction into the Great Index itself — a single line that is both perfectly true and perfectly false — so the Book snags on it and can never finish reading.', rule:'break', cost:2, req:s=>s.contradiction>=2,
       note:'you spend two contradictions; the Registrar\'s machinery shudders and stalls on the impossible line, and the whole cathedral of drawers hangs open, unfinishable — Wonderland has room to breathe again', index:-3, self:1, add:'a line in the Index that is both true and false at once', go:'n_trial' });
     c.push({ t:'Play the trial as the theatre it is — testify in perfect nonsense, out-mad the mad court, and let the whole absurd machine run.', kind:'play', pre:'the way through',
@@ -615,6 +615,7 @@ n_trial_defy:{ region:'trial', scene:'trial', title:'Nothing But a Pack of Cards
 <em>"Who cares for you? You're nothing but a pack of cards!"</em>`,
   choices:[
     { t:'And the whole pack rises into the air and comes flying down at you—', pre:'the dream comes apart',
+      journal:'"Who cares for you? You are nothing but a pack of cards!" — and I meant it.',
       end: (S,P)=>{
         const many = S.impossibleThings.length;
         const wild = S.index<=2;                     // you kept Wonderland from being corrected

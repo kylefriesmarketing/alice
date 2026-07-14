@@ -11,7 +11,7 @@
 const AUDIO = (() => {
 let ctx=null, master=null, lp=null, current=null;
 let muted=false; try{ muted=localStorage.getItem('alice_muted')==='1'; }catch(e){}
-let waking=6, boxTimer=null, clockTimer=null, extraTimer=null;
+let waking=6, curIndex=0, boxTimer=null, clockTimer=null, extraTimer=null;
 
 /* per-scene colour: root note, drone intervals, and flavour flags */
 const CFG={
@@ -87,15 +87,19 @@ function scheduleBox(cfg){
   let i=0;
   const step=()=>{ if(!current||!cfg.box) return;
     const w=wrongness();
+    const st=curIndex/8;                                     /* the Great Index: 0 wild … 1 corrected */
     const deg=NURSERY[i%NURSERY.length];
-    const detune = (Math.random()*2-1)*w*45;                 /* sink → out of tune */
-    const late = Math.random()*w*0.18;                       /* sink → notes arrive late */
+    /* sinking curdles the box warm-WRONG; the Index sterilises it cold-RIGHT (perfectly
+       in tune, perfectly on time — and dead). The two pull against each other. */
+    const detune = (Math.random()*2-1)*w*45*(1-st);          /* index files the wrong-tuning flat */
+    const late = Math.random()*w*0.18*(1-st);                /* …and files the late notes on time */
     const f=midiHz(cfg.root+deg);
-    ping(f, .12*(1-w*.4)*(cfg.sweet?1.1:1), cfg.resolve?2.0:1.4, ctx.currentTime+late, detune);
-    if(w>.5 && Math.random()<w*.5) ping(f, .05, 1.0, ctx.currentTime+late+0.09, detune-20); /* doubled, ghost */
+    ping(f, .12*(1-w*.4)*(cfg.sweet?1.1:1)*(1-st*.35), cfg.resolve?2.0:1.4, ctx.currentTime+late, detune);
+    if(w>.5 && st<.5 && Math.random()<w*.5) ping(f, .05, 1.0, ctx.currentTime+late+0.09, detune-20); /* doubled ghost — the Index erases it */
+    if(st>.5) bell(midiHz(cfg.root+31),.02+st*.02,.05,'square'); /* a cold filing-tick as sense hardens */
     i++;
     const base=cfg.resolve?560:520;
-    const tempo = base*(1 + (Math.random()*2-1)*w*0.4);      /* sink → tempo warps */
+    const tempo = base*(1 + (Math.random()*2-1)*w*0.4*(1-st));  /* index makes the tempo metronomic */
     boxTimer=setTimeout(step, tempo);
   };
   boxTimer=setTimeout(step, 700);
@@ -146,8 +150,9 @@ function scheduleBirds(cfg){
   extraTimer=setTimeout(go,1200);
 }
 
-function setScene(key, wk, hub){
+function setScene(key, wk, index){
   waking = (wk===undefined?6:wk);
+  curIndex = index||0;
   if(!ensure()) return;
   if(ctx.state==='suspended') ctx.resume();
   const cfg=CFG[key]||CFG.title;

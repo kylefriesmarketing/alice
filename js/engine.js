@@ -14,7 +14,8 @@ const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
 
 /* ---------------- persistence ---------------- */
 function defP(){ return { runs:0, wakings:{}, impossibleEver:{}, bestSelf:0,
-  sixBreakfast:false, dreamDepth:0, lookingGlass:false, lastTitle:null, lastKind:null, lastImpossible:[] }; }
+  sixBreakfast:false, dreamDepth:0, lookingGlass:false, lastTitle:null, lastKind:null, lastImpossible:[],
+  lastJournal:[], journalEver:0 }; }
 function loadP(){ try{ const p=JSON.parse(localStorage.getItem(K_P));
   if(p){ const d=defP(); const o=Object.assign(d,p);
     o.wakings=p.wakings||{}; o.impossibleEver=p.impossibleEver||{}; return o; } }catch(e){}
@@ -111,6 +112,15 @@ $('btn-cast').onclick=()=>{
   $('gallery-body').innerHTML=h;
   show('gallery');
 };
+$('btn-journal').onclick=()=>{
+  const jr=P.lastJournal||[];
+  let h=`<div class="gallery-sub">The Great Index writes one fixed, final account of everything. Alice keeps the other kind of book — the pages she wrote in her own words, on her last way down.${P.journalEver?' <b>'+P.journalEver+'</b> pages written, all told.':''}</div>`;
+  h+= jr.length ? `<div class="ej-list">`+jr.map(t=>`<div class="ej-line">“${t}”</div>`).join('')+`</div>`
+    : `<div class="gallery-sub">No pages yet. Alice writes a line only when she meets the dream honestly — an admitted uncertainty, a believed impossibility, a truth said plainly into a mad court. The honest pages are what let you wake as a Wonderland that can still change. Play a while, and the book fills.</div>`;
+  $('gallery-title').textContent="Alice's Journal";
+  $('gallery-body').innerHTML=h;
+  show('gallery');
+};
 
 /* ---------------- HUD: SIZE (star) + SELF + WONDER + the waterline ------- */
 const SIZE_WORDS={'-3':'thimble','-2':'tiny','-1':'small','0':'yourself','1':'tall','2':'huge','3':'house-high'};
@@ -199,7 +209,7 @@ function render(nodeId, sameNode){
 
   const reg=REGIONS[n.region]||{name:''};
   paintScene($('scene-art'), n.scene||n.region, nodeId+P.runs);
-  AUDIO.setScene(n.scene||n.region, S.waking, n.hub);
+  AUDIO.setScene(n.scene||n.region, S.waking, S.index);
   paintHUD();
 
   $('region-name').textContent=reg.name;
@@ -333,11 +343,13 @@ function ending(id){
   P.bestSelf=Math.max(P.bestSelf, clamp(S.self,0,6));
   if(impCount()>=ALICE.SIX_BEFORE_BREAKFAST) P.sixBreakfast=true;
   P.dreamDepth=Math.min(10, P.runs);
+  P.lastJournal=(S.journal||[]).slice();
+  P.journalEver=(P.journalEver||0)+((S.journal||[]).length);
   saveP(); clearRun();
 
   AUDIO.sting(e.kind);
   paintScene($('ending-art'), e.scene||'wake', id+P.runs);
-  AUDIO.setScene(e.scene||'wake', e.kind==='true'||e.kind==='secret'?12:(e.kind==='stay'||e.kind==='lost'?1:8));
+  AUDIO.setScene(e.scene||'wake', e.kind==='true'||e.kind==='secret'||e.kind==='change'?12:(e.kind==='stay'||e.kind==='lost'?1:8), e.kind==='index'?8:0);
   const KIND={true:'the true waking',secret:'past the last page of the book',wake:'a waking, of a kind',
     lost:'a hollow waking',stay:'no waking at all',trapped:'kept by the dream',
     index:'corrected into sense',change:'a wonderland that changes'};
@@ -347,6 +359,11 @@ function ending(id){
   $('ending-text').innerHTML=fmt(e.text);
   $('ending-tally').innerHTML=tally(e);
   $('ending-verse').textContent=e.verse||'';
+  const ej=$('ending-journal');
+  if(ej){ const jr=S.journal||[];
+    ej.innerHTML = jr.length ? '<div class="ej-lab">the pages you wrote, this dream</div>'+jr.map(t=>`<div class="ej-line">“${t}”</div>`).join('') : '';
+    ej.style.display = jr.length?'':'none';
+  }
 
   /* the share line travels */
   const sh=$('btn-share');
