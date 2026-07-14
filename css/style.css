@@ -167,6 +167,8 @@ em{font-style:italic;color:#fff}
 .index-block.high .index-bar span{background:linear-gradient(90deg,#c9b0a0,var(--red))}
 .index-block.high .hlab{color:var(--red)}
 .index-block .hlab em{color:var(--red);font-style:normal;letter-spacing:.14em}
+.rabbit-watch{font-family:var(--sans);font-size:9.5px;letter-spacing:.06em;color:var(--bone-dim);margin-top:1px}
+.rabbit-watch.late{color:var(--red)}
 
 /* THE RULE CARD — the Great Index's local law, pinned to the margin */
 #rulecard{margin-top:16px;border:1px solid rgba(201,194,176,.4);border-left:3px solid var(--sky);

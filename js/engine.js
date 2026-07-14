@@ -177,9 +177,13 @@ function hudContra(){
 function hudIndex(){
   const n=clamp(S.index,0,8), frac=n/8;
   const done=n>=8;
-  return `<div class="hud-block index-block${n>=6?' high':''}" title="THE GREAT INDEX — how much of Wonderland has been corrected into sense. Reasoning and obeying the local rules complete it; nonsense, play and defiance hold it back. When it fills, the Last Unbirthday finishes and nothing may ever change again.">
+  /* the White Rabbit's watch: 11:00 (Index 0) creeping to midnight (Index 8) — the Last Unbirthday */
+  const mins=Math.round(frac*59);
+  const watch=done?'midnight':'11:'+String(mins).padStart(2,'0');
+  return `<div class="hud-block index-block${n>=6?' high':''}" title="THE GREAT INDEX — how much of Wonderland has been corrected into sense, shown as the White Rabbit's watch counting down to midnight and the Last Unbirthday. Reasoning and obeying the local rules complete it; nonsense, play and defiance hold it back. When the watch strikes midnight, the Index is read aloud and nothing may ever change again.">
     <span class="hlab">the index${done?' <em>complete</em>':''}</span>
-    <div class="index-bar"><span style="width:${Math.round(frac*100)}%"></span></div></div>`;
+    <div class="index-bar"><span style="width:${Math.round(frac*100)}%"></span></div>
+    <span class="rabbit-watch${n>=6?' late':''}">🕰 ${watch}</span></div>`;
 }
 function paintHUD(){
   $('hud').innerHTML=`<div class="hud-panel">${hudSize()}<div class="hud-sep"></div>${hudSelf()}<div class="hud-sep"></div>${hudContra()}<div class="hud-sep"></div>${hudWonder()}<div class="hud-sep"></div>${hudIndex()}</div>`;

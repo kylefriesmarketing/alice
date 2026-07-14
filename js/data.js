@@ -432,6 +432,8 @@ n_cheshire_fork:{ region:'cheshire', scene:'cheshire', title:'Which Way From Her
 
 And, because it is the one honest creature in the dream, it adds the only useful map you will get: ${S.flags.sawGrin?'that the way out is not a place at all, but a size and a self and a moment; that you will know the door when you have grown enough to walk through it; and that most people down here forget they ever meant to leave.':'that most people down here forget, in the end, that they ever meant to leave at all — and that forgetting is the only thing in Wonderland that is truly dangerous.'}
 
+${S.index>=6?'And close by, the White Rabbit bolts across a clearing with his watch pressed to one ear, wailing that it is nearly midnight, nearly the Last Unbirthday, and that everything not yet properly filed will be struck out as an error — and he is gone before you can catch a single word more.':S.index>=3?'The White Rabbit crosses the far end of the wood at a dead run, checking his watch and muttering that he shall be late, he shall be <em>late</em> — and vanishes down a hole shaped, you notice, exactly like a filing drawer.':'Far off, the White Rabbit trots by with his watch out, and for once he is not hurrying, as though there were still time enough down here for everything.'}
+
 Then it begins to vanish again, and asks, kindly, whether you have decided where you are going.`,
   choices:[
     { t:'To the March Hare\'s — to the tea-party, where it is always six o\'clock.', pre:'the maddest room in the dream', go:'n_tea' },
