@@ -93,7 +93,9 @@ You are in a long, low hall, lit by a row of lamps hanging from the roof. Ahead 
 
 Except the hall is not quite as you half-remember it. Every door wears a small brass plate now, freshly screwed on, giving its one correct name. A notice on the wall reads: <em>PLEASE DO NOT BE MORE THAN ONE THING AT A TIME.</em> And somewhere far below, very faintly, you can hear a great book being written — one careful, permanent line at a time.
 
-<span class="tut">This is a dream, and Wonderland is being <em>corrected</em> — put in order, made to make sense, before midnight and the Last Unbirthday. You cannot die here, and you cannot win. You can only wake as yourself — and keep Wonderland strange enough to be worth waking from. The one thing you fully control is your <em>size</em>. Mind it. Every door here is built to the wrong measurements on purpose — or was, before they started fixing them.</span>`,
+<span class="tut">This is a dream, and Wonderland is being <em>corrected</em> — put in order, made to make sense, before midnight and the Last Unbirthday. You cannot die here, and you cannot win. You can only wake as yourself — and keep Wonderland strange enough to be worth waking from.
+
+Each place pins a <em>Rule</em> to its margin. You can obey it, bend its wording, or spend a <em>Contradiction</em> to break it outright and keep the dream wild. Reasoning and obeying complete the Great Index; nonsense, play and defiance hold it back. And the one thing you fully control is your <em>size</em> — every door here was built to the wrong measurements on purpose, before they started fixing them.</span>`,
   choices:[
     { t:'Follow, before the last door swings shut.', go:'n_hall' },
   ]},

@@ -88,7 +88,9 @@ em{font-style:italic;color:#fff}
   font-family:var(--sans);font-weight:600}
 .cell .ek{font-family:var(--sans);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;
   margin-bottom:4px;font-weight:500}
-.cell.locked{color:var(--faint);align-items:center;font-style:italic;font-weight:400}
+.cell.locked{color:var(--faint);align-items:flex-start;justify-content:flex-start;font-style:normal;font-weight:400}
+.cell.locked .ek{color:var(--faint)}
+.cell.locked .hint{font-style:italic;font-size:12px;line-height:1.45;color:var(--bone-dim)}
 .k-true .ek{color:var(--gold)} .cell.k-true{border-color:rgba(232,200,74,.45)}
 .k-secret .ek{color:var(--violet)} .cell.k-secret{border-color:rgba(198,127,214,.5)}
 .k-wake .ek{color:var(--sky)} .k-lost .ek{color:var(--pink)}

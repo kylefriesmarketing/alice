@@ -97,11 +97,21 @@ $('btn-wakings').onclick=()=>{
   const KIND={true:'the true waking',secret:'past the last page',wake:'a waking, of a kind',
     lost:'a hollow waking',stay:'no waking at all',trapped:'kept by the dream',
     index:'corrected into sense',change:'a wonderland that changes'};
-  let h=`<div class="gallery-sub">${got} of ${ids.length} ways the dream can end. You cannot die in Wonderland — but you can wake well, wake wrong, or never wake at all.</div>`;
+  const HINTS={
+    e_changes:'Keep Wonderland wild, write one honest page, then grow and refuse it a single fixed name.',
+    e_teller:'Across many dreams believe enough impossible things, then carry the whole of it back.',
+    e_riverbank:'Grow to your full size at the trial and throw off the pack of cards, as yourself.',
+    e_startle:'Let the Queen\'s scream reach you while you are still near the surface.',
+    e_index:'Reason, and obey the local rules, until the Great Index finishes writing itself.',
+    e_mabel:'Lose too much of yourself, and wake unsure whose face you are wearing.',
+    e_wrongsize:'Give up, at the wrong size, on ever being able to change it again.',
+    e_stay:'Sink too deep — or play along so long you forget you ever meant to leave.',
+  };
+  let h=`<div class="gallery-sub">${got} of ${ids.length} ways the dream can end. You cannot die in Wonderland — but you can wake well, wake wrong, or never wake at all. Each undreamed ending keeps a hint of how to find it.</div>`;
   h+=`<div class="grid-cells">`+ids.map(i=>{ const e=ENDINGS[i];
     return P.wakings[i]
       ? `<div class="cell k-${e.kind}"><span class="ek">${KIND[e.kind]||e.kind}</span>${e.title}</div>`
-      : `<div class="cell locked">— undreamed —</div>`; }).join('')+`</div>`;
+      : `<div class="cell locked"><span class="ek">undreamed</span><span class="hint">${HINTS[i]||'—'}</span></div>`; }).join('')+`</div>`;
   $('gallery-title').textContent='How the Dream Ends';
   $('gallery-body').innerHTML=h;
   show('gallery');
