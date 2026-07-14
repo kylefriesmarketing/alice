@@ -231,6 +231,52 @@ index(r){ let s=G('ix',[[0,'#20242c'],[.5,'#2e343e'],[1,'#3a4048']])+rect(0,0,W,
   s+=path(`M${W/2-10},330 q10,-14 22,-4 q-6,10 -22,4 z`,'#c0392b',INK,1.2);   /* the one red rose, filed away */
   s+=alice(W/2,470,110,'#232830');
   return s+frame('#5a626c');},
+
+/* ===== THROUGH THE LOOKING-GLASS — mirror-silver + chessboard green ===== */
+lgmirror(r){ let s=G('lgm',[[0,'#141a2c'],[.5,'#26304a'],[1,'#1a2036']])+rect(0,0,W,H,'url(#lgm)');
+  s+=rect(0,H-120,W,120,'#20263c');   /* mantelpiece */
+  s+=RG('lgfire',[[0,'#d0a05a',.5],[1,'#000',0]])+`<ellipse cx="${W*0.72}" cy="${H-64}" rx="130" ry="60" fill="url(#lgfire)"/>`;
+  /* the tall looking-glass frame */
+  s+=path(`M${W/2-150},${H-90} L${W/2-150},210 Q${W/2-150},112 ${W/2},112 Q${W/2+150},112 ${W/2+150},210 L${W/2+150},${H-90} Z`,'#0e1424','#c9b98a',5);
+  s+=rect(W/2-130,152,260,H-250,'#1a2238',.92);
+  s+=line(W/2,152,W/2,H-108,'#8fa4c8',1,.4);
+  /* reversed grinning clock on the mantel */
+  const cx=W*0.2, cy=H-150;
+  s+=circ(cx,cy,40,'#e8e0c8',1)+`<circle cx="${cx}" cy="${cy}" r="40" fill="none" stroke="${INK}" stroke-width="2.4"/>`;
+  s+=circ(cx-13,cy-8,4,INK)+circ(cx+13,cy-8,4,INK)+path(`M${cx-17},${cy+8} q17,15 34,0`,null,INK,3);
+  s+=alice(W/2,H-96,150,'#0e1424');
+  return s+frame('#8fa4c8');},
+
+lgboard(r){ let s=G('lgb',[[0,'#cfe8dc'],[.42,'#9fd0b8'],[1,'#5a8a72']])+rect(0,0,W,H,'url(#lgb)');
+  const top=158, rows=6, cols=9, cw=W/cols, ch=(H-top)/rows;
+  for(let row=0;row<rows;row++) for(let col=0;col<cols;col++)
+    if((row+col)%2===0) s+=rect(col*cw, top+row*ch, cw, ch, '#356a52', .78);
+  for(let row=1;row<rows;row+=2) s+=rect(0, top+row*ch-3, W, 6, '#6fb0d0', .85);  /* the brooks */
+  s+=`<rect x="0" y="${top}" width="${W}" height="${H-top}" fill="none" stroke="${INK}" stroke-width="1" opacity=".28"/>`;
+  s+=rect(0,top-26,W,28,'#2a5a3a',.9);  /* a hedge on the horizon */
+  s+=alice(W*0.5, H-34, 118, '#1a2a20');
+  return s+frame('#4a8a68');},
+
+lgwall(r){ let s=G('lgw',[[0,'#a8c0d8'],[.5,'#c8d0d8'],[1,'#8a9aa8']])+rect(0,0,W,H,'url(#lgw)');
+  const wy=H*0.56; s+=rect(0,wy,W,H-wy,'#9a6a4a');
+  for(let row=0;(wy+row*30)<H;row++){ const yy=wy+row*30, off=(row%2)*40;
+    s+=line(0,yy,W,yy,'#6a4028',2,.7);
+    for(let x=off;x<W;x+=80) s+=line(x,yy,x,yy+30,'#6a4028',2,.55); }
+  const ex=W/2, ey=wy-72;
+  s+=`<ellipse cx="${ex}" cy="${ey}" rx="74" ry="94" fill="#efe6cf" stroke="${INK}" stroke-width="2.4"/>`;
+  s+=circ(ex-25,ey-16,6,INK)+circ(ex+25,ey-16,6,INK)+path(`M${ex-27},${ey+22} q27,15 54,0`,null,INK,3);
+  s+=path(`M${ex-74},${ey+72} q74,26 148,0 l-9,22 q-65,20 -130,0 z`,'#c94b4a',INK,2);
+  return s+frame('#6a8090');},
+
+lgcrown(r){ let s=G('lgc',[[0,'#2a1420'],[.5,'#5a2430'],[1,'#3a1820']])+rect(0,0,W,H,'url(#lgc)');
+  s+=path(`M60,${H-88} L${W-60},${H-88} L${W-120},${H-28} L120,${H-28} Z`,'#e8dcc0',INK,2);  /* table */
+  for(let i=0;i<7;i++){ const x=140+i*(W-280)/6, h=120+((i%3)*70);
+    s+=line(x,H-98,x,H-98-h,'#e8d0a0',5)+circ(x,H-98-h-6,6,'#ffd27a',.95); }
+  const q=(x,c)=>`<g transform="translate(${x},${H-108})">`+path(`M-46,0 Q-52,-150 0,-160 Q52,-150 46,0 Z`,c)+circ(0,-186,26,c)+path(`M-24,-206 l24,-24 l24,24 z`,c)+`</g>`;
+  s+=q(W*0.19,'#c0392b')+q(W*0.81,'#e8e0d0');   /* red + white queens */
+  s+=alice(W/2,H-98,150,'#1a0e14');
+  s+=path(`M${W/2-28},${H-98-134} l13,-19 l15,13 l15,-13 l13,19 z`,'#e8c84a',INK,1.6);  /* her crown */
+  return s+frame('#e8c84a');},
 };
 P.riverbank=P.wake;
 

@@ -68,6 +68,7 @@ function titleScreen(){
   paintScene($('title-art'),'title','r'+P.runs);
   AUDIO.setScene('title', 6);
   $('btn-continue').classList.toggle('hidden', !loadRun());
+  $('btn-lookingglass').classList.toggle('hidden', !(P.runs>0 && ALICE.newRunLG));
   const el=$('title-song');
   const everImp=Object.keys(P.impossibleEver).length;
   if(!P.runs){
@@ -84,6 +85,7 @@ function titleScreen(){
   }
 }
 $('btn-begin').onclick=()=>{ S=newRun(); lastNode=null; show('game-screen'); render(S.node); };
+$('btn-lookingglass').onclick=()=>{ if(!ALICE.newRunLG) return; S=ALICE.newRunLG(); lastNode=null; show('game-screen'); render(S.node); };
 $('btn-continue').onclick=()=>{ const r=loadRun(); if(!r) return titleScreen();
   S=r; if(!S.impossibleThings)S.impossibleThings=[]; if(!S.flags)S.flags={}; if(!S.seen)S.seen={};
   if(S.contradiction===undefined)S.contradiction=2; if(S.index===undefined)S.index=3; if(!S.journal)S.journal=[];
@@ -106,6 +108,9 @@ $('btn-wakings').onclick=()=>{
     e_mabel:'Lose too much of yourself, and wake unsure whose face you are wearing.',
     e_wrongsize:'Give up, at the wrong size, on ever being able to change it again.',
     e_stay:'Sink too deep — or play along so long you forget you ever meant to leave.',
+    lg_queen:'Through the Looking-Glass: cross all eight squares the mirror way, and keep yourself at the coronation.',
+    lg_kitten:'Through the Looking-Glass: at the crown, seize the shrinking Red Queen and shake her.',
+    lg_unmade:'Through the Looking-Glass: insist the mirror-world run forwards, and it will unmake you.',
   };
   let h=`<div class="gallery-sub">${got} of ${ids.length} ways the dream can end. You cannot die in Wonderland — but you can wake well, wake wrong, or never wake at all. Each undreamed ending keeps a hint of how to find it.</div>`;
   h+=`<div class="grid-cells">`+ids.map(i=>{ const e=ENDINGS[i];
@@ -195,7 +200,19 @@ function hudIndex(){
     <div class="index-bar"><span style="width:${Math.round(frac*100)}%"></span></div>
     <span class="rabbit-watch${n>=6?' late':''}">🕰 ${watch}</span></div>`;
 }
+function hudSquare(){
+  const n=clamp(S.square||2,2,8);
+  let ladder='';
+  for(let i=8;i>=1;i--){ const here=i===n, past=i<n;
+    ladder+=`<i class="${here?'here':(past?'past':'')}${i===8?' crown':''}"></i>`; }
+  return `<div class="hud-block square-block" title="THE BOARD — you are a white pawn on the ${n}th square of the Looking-Glass. Reach the eighth and you are crowned Queen. Advance the mirror way — here, going forwards is the trap.">
+    <span class="hlab">the board</span><div class="board-ladder">${ladder}</div>
+    <span class="square-lab">square <b>${n}</b> of 8${n>=8?' · Queen':''}</span></div>`;
+}
 function paintHUD(){
+  if(S.book==='lookingglass')
+    $('hud').innerHTML=`<div class="hud-panel">${hudSquare()}<div class="hud-sep"></div>${hudSize()}<div class="hud-sep"></div>${hudSelf()}</div>`;
+  else
   $('hud').innerHTML=`<div class="hud-panel">${hudSize()}<div class="hud-sep"></div>${hudSelf()}<div class="hud-sep"></div>${hudContra()}<div class="hud-sep"></div>${hudWonder()}<div class="hud-sep"></div>${hudIndex()}</div>`;
   if(S.mushroom){
     const g=$('sz-grow'), sh=$('sz-shrink');
@@ -329,6 +346,9 @@ function applyDeltas(c){
   if(dc) S.contradiction=clamp(S.contradiction+dc,0,6);
   if(c.honest) S.flags.honestUncertainty=1;
   if(c.journal){ if(!S.journal) S.journal=[]; S.journal.push(fmt(c.journal)); }
+  /* Looking-Glass: advance the chess-square; count the forwards-traps */
+  if(c.square!==undefined && S.square!==undefined) S.square=clamp(S.square+c.square,2,8);
+  if(c.fail){ if(!S.flags) S.flags={}; S.flags.mirrorFail=(S.flags.mirrorFail||0)+1; }
 }
 
 function choose(c){
@@ -336,10 +356,10 @@ function choose(c){
   if(c.fx) c.fx(S,P);
   const endId=typeof c.end==='function'?c.end(S,P):c.end;
   if(endId) return ending(endId);
-  /* sank too deep — the dream closes over (the Stay), unless already ending */
-  if(S.waking<=0) return ending('e_stay');
+  /* sank too deep — the dream closes over, unless already ending */
+  if(S.waking<=0) return ending(S.book==='lookingglass'?'lg_unmade':'e_stay');
   /* the Great Index finished writing itself — Wonderland corrected into sense */
-  if(S.index>=8) return ending('e_index');
+  if(S.book!=='lookingglass' && S.index>=8) return ending('e_index');
   let goId=typeof c.go==='function'?c.go(S,P):c.go;
   if(!goId) return titleScreen();
   render(goId);

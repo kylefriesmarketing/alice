@@ -94,10 +94,15 @@ and John Tenniel's original engravings, are **public domain worldwide**. All pro
 original; only short, famous, public-domain phrases are quoted. No Disney / Burton / American
 McGee designs are referenced.
 
-## Next
+## Through the Looking-Glass — the second book
 
-**THROUGH THE LOOKING-GLASS** as the unlocked second book — Looking-Glass is already a chess
-problem: Alice a pawn advancing square by square to be crowned. Same engine, mirror-logic replacing
-nonsense. See `BIBLE.md` §7.
+Wake from Wonderland once and the title unlocks **Through the Looking-Glass**, a whole second act on
+the same engine. Alice is a white **pawn** advancing square by square (the HUD becomes a chess-ladder)
+toward the eighth rank and a crown. And the trap **inverts**: where Wonderland punished *reason*, the
+Looking-Glass punishes going **forwards** — here you walk *away* from what you want to reach it, *run*
+to stand still, read in a mirror, and let words mean whatever their speaker chooses. Fresh
+public-domain cast (the Red Queen, Tweedledum & Tweedledee, the White Queen who lives backwards,
+Humpty Dumpty, the White Knight) and its own three wakings, including **Queen Alice** and the book's
+own *"which dreamed it?"* Its content lives in `js/data2.js` with four Looking-Glass SVG scenes.
 
 — *The tea is always ready, the clock is stuck at six, and the little door is just too small.*

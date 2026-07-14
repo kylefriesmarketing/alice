@@ -144,6 +144,16 @@ em{font-style:italic;color:#fff}
 .size-ctrl.no-mush{opacity:.85}
 .size-ctrl.no-mush .sz-word{color:var(--faint);font-style:italic}
 
+/* THE BOARD — Looking-Glass chess-ladder */
+.square-block{align-items:center}
+.board-ladder{display:flex;flex-direction:column;gap:2px}
+.board-ladder i{display:block;width:12px;height:5px;border-radius:1px;background:#0f0a1c;border:1px solid var(--line);transition:.4s}
+.board-ladder i.past{background:var(--sky);border-color:transparent}
+.board-ladder i.here{background:var(--gold);border-color:transparent;box-shadow:0 0 6px rgba(232,200,74,.55)}
+.board-ladder i.crown{border-radius:3px 3px 0 0;height:7px}
+.square-lab{font-family:var(--sans);font-size:9.5px;letter-spacing:.05em;color:var(--bone-dim);margin-top:3px}
+.square-lab b{color:var(--gold);font-size:11px}
+
 /* SELF pips */
 .self-pips{display:flex;gap:3px}
 .self-pips i{display:block;width:9px;height:9px;border-radius:50%;background:#0f0a1c;
