@@ -15,10 +15,20 @@ const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
 /* ---------------- persistence ---------------- */
 function defP(){ return { runs:0, wakings:{}, impossibleEver:{}, bestSelf:0,
   sixBreakfast:false, dreamDepth:0, lookingGlass:false, lastTitle:null, lastKind:null, lastImpossible:[],
-  lastJournal:[], journalEver:0 }; }
+  lastJournal:[], journalEver:0, marginNotes:{} }; }
+/* Margin Notes — Second Edition knowledge the next dream inherits (the Last
+   Unbirthday's meta-progression). Each unlocks a [remembered] choice on later runs. */
+const MARGIN_NOTES={
+  grin:   'A grin can outlive its cat — you have seen it done.',
+  size:   'You once learned to be any size you chose, at will.',
+  teatable:'You have left the tea-table seated and gone at once.',
+  honest: 'You wrote, once: "I did not know who I was, and said so."',
+  index:  'You remember how it ends if you let it: grey drawers, a filed rose.',
+  changes:'You wrote, once: "Wonderland is true because it changes."',
+};
 function loadP(){ try{ const p=JSON.parse(localStorage.getItem(K_P));
   if(p){ const d=defP(); const o=Object.assign(d,p);
-    o.wakings=p.wakings||{}; o.impossibleEver=p.impossibleEver||{}; return o; } }catch(e){}
+    o.wakings=p.wakings||{}; o.impossibleEver=p.impossibleEver||{}; o.marginNotes=p.marginNotes||{}; return o; } }catch(e){}
   return defP(); }
 function saveP(){ try{ localStorage.setItem(K_P, JSON.stringify(P)); }catch(e){} }
 let P=loadP();
@@ -67,8 +77,10 @@ function titleScreen(){
     if(everImp>=ALICE.TELLER_EVER) deep='You have been down the hole so many times that the dream is nearly as real to you as the bank. You could tell it to someone now, all of it, from the fall to the flying cards — and perhaps you are meant to.';
     else if(everImp>=6) deep='Each time you go down, you come back up remembering a little more of it — a grin, a garden, a stopped clock. Six impossible things, and counting, believed before breakfast.';
     else if(P.runs>=1) deep='The dream is half-remembered on waking, the way dreams are: a rabbit, a long fall, a door too small. You feel there was more, just past the edge of it.';
+    const mnGot=Object.keys(P.marginNotes||{}).length;
     el.innerHTML='<span class="muse">'+deep+'</span>'+
-      '<span class="verse">impossible things believed, all told: <b>'+everImp+'</b>'+(P.sixBreakfast?' &nbsp;·&nbsp; six before breakfast ✦':'')+'</span>';
+      '<span class="verse">impossible things believed, all told: <b>'+everImp+'</b>'+(P.sixBreakfast?' &nbsp;·&nbsp; six before breakfast ✦':'')+
+      (mnGot?' &nbsp;·&nbsp; <b>'+mnGot+'</b> margin note'+(mnGot===1?'':'s')+' remembered':'')+'</span>';
   }
 }
 $('btn-begin').onclick=()=>{ S=newRun(); lastNode=null; show('game-screen'); render(S.node); };
@@ -117,6 +129,11 @@ $('btn-journal').onclick=()=>{
   let h=`<div class="gallery-sub">The Great Index writes one fixed, final account of everything. Alice keeps the other kind of book — the pages she wrote in her own words, on her last way down.${P.journalEver?' <b>'+P.journalEver+'</b> pages written, all told.':''}</div>`;
   h+= jr.length ? `<div class="ej-list">`+jr.map(t=>`<div class="ej-line">“${t}”</div>`).join('')+`</div>`
     : `<div class="gallery-sub">No pages yet. Alice writes a line only when she meets the dream honestly — an admitted uncertainty, a believed impossibility, a truth said plainly into a mad court. The honest pages are what let you wake as a Wonderland that can still change. Play a while, and the book fills.</div>`;
+  const mn=P.marginNotes||{}, mnKeys=Object.keys(MARGIN_NOTES), got=mnKeys.filter(k=>mn[k]).length;
+  h+=`<div class="gallery-sub" style="margin-top:1.5em">Margin Notes — <b>${got}</b> of ${mnKeys.length}. The Great Index leaves no margins; Alice's book does. Each is something one dream taught you that the <em>next</em> dream will let you use — a <span style="color:#cbb36a">remembered</span> choice, waiting in a later room.</div>`;
+  h+=`<div class="mn-list">`+mnKeys.map(k=>mn[k]
+    ? `<div class="mn-row"><b>remembered</b>${MARGIN_NOTES[k]}</div>`
+    : `<div class="mn-row locked">— not yet learned —</div>`).join('')+`</div>`;
   $('gallery-title').textContent="Alice's Journal";
   $('gallery-body').innerHTML=h;
   show('gallery');
@@ -246,15 +263,16 @@ function render(nodeId, sameNode){
   (list||[]).forEach(c=>{
     if(c.req && !c.req(S,P)) return;
     const b=document.createElement('button');
-    b.className='choice'+(c.kind?' k-'+c.kind:'')+(c.key?' key':'')+(c.rule?' rule-'+c.rule:'');
+    b.className='choice'+(c.kind?' k-'+c.kind:'')+(c.key?' key':'')+(c.rule?' rule-'+c.rule:'')+(c.margin?' margin':'');
     let pre=c.pre||'';
     if(c.kind && !pre) pre=c.kind;
-    /* rule tag: OBEY / BEND / BREAK (with Contradiction cost) */
+    /* tags: [remembered] margin note, then OBEY / BEND / BREAK (with Contradiction cost) */
     let tag='';
-    if(c.rule==='obey') tag='<b class="rtag obey">obey</b> ';
-    else if(c.rule==='bend') tag='<b class="rtag bend">bend</b> ';
-    else if(c.rule==='break') tag=`<b class="rtag break">break · spend ${c.cost||1} ✶</b> `;
-    else if(c.kind) tag='<b class="kmark">'+c.kind+'</b> · ';
+    if(c.margin) tag+='<b class="rtag remembered">remembered</b> ';
+    if(c.rule==='obey') tag+='<b class="rtag obey">obey</b> ';
+    else if(c.rule==='bend') tag+='<b class="rtag bend">bend</b> ';
+    else if(c.rule==='break') tag+=`<b class="rtag break">break · spend ${c.cost||1} ✶</b> `;
+    else if(c.kind && !c.margin) tag+='<b class="kmark">'+c.kind+'</b> · ';
     b.innerHTML=(pre||tag?`<span class="c-pre">${tag}${pre}</span>`:'')+fmt(c.t);
     b.onclick=()=>choose(c);
     box.appendChild(b);
@@ -345,6 +363,14 @@ function ending(id){
   P.dreamDepth=Math.min(10, P.runs);
   P.lastJournal=(S.journal||[]).slice();
   P.journalEver=(P.journalEver||0)+((S.journal||[]).length);
+  /* Margin Notes the next dream inherits */
+  if(!P.marginNotes) P.marginNotes={};
+  if(S.flags.sawGrin) P.marginNotes.grin=1;
+  if(S.mushroom) P.marginNotes.size=1;
+  if(S.flags.brokeTea) P.marginNotes.teatable=1;
+  if(S.flags.honestUncertainty) P.marginNotes.honest=1;
+  if(id==='e_index') P.marginNotes.index=1;
+  if(id==='e_changes'||id==='e_teller') P.marginNotes.changes=1;
   saveP(); clearRun();
 
   AUDIO.sting(e.kind);

@@ -307,6 +307,10 @@ For a long while it says nothing. Then it takes the hookah out of its mouth, and
       add:'grave advice, gravely taken, from a caterpillar', waking:1, go:'n_cat_poem' },
     { t:'"I think you ought to tell me who YOU are, first." Turn to go.', kind:'defy', pre:'stand your ground — early', req:s=>s.self>=3,
       note:'it calls you back with the promise of something important — which you need — so you swallow your exit and stay', self:-1, go:'n_cat_poem' },
+    { t:'Refuse to be any one thing. Tell the Caterpillar you are a girl and a serpent and a queen and Nobody, all at once, and that no book will ever pin you to a single line.', rule:'break', cost:1, req:s=>s.contradiction>=1,
+      note:'you spend a contradiction to be several true things at once; it is exactly the crime the Wood\'s new rule forbids, and it is exactly what keeps the Index from ever writing your one fixed name', add:'being several true selves at once, and none of them final', self:1, go:'n_cat_poem' },
+    { t:'Tell the Caterpillar, before it can finish the question, that you have already watched a grin outlive its cat — so you know perfectly well a thing need not keep its shape to be real.', margin:true, pre:'from another dream', req:(s,p)=>p&&p.marginNotes&&p.marginNotes.grin,
+      note:'you arrive carrying an impossibility you earned in an earlier dream; the Caterpillar is, for once, almost impressed, and holding a proven contradiction ready steadies you against being defined', contra:1, self:1, go:'n_cat_poem' },
   ]},
 n_cat_poem:{ region:'wood', scene:'caterpillar', title:'Repeat "You Are Old, Father William"',
   text:`<em>"Repeat,"</em> says the Caterpillar, <em>"'You are old, Father William.'"</em>
@@ -434,6 +438,8 @@ Then it begins to vanish again, and asks, kindly, whether you have decided where
     { t:'Straight on toward the Queen\'s — there is a garden out there you have been trying to reach since the very first door.', pre:'toward the croquet-ground', req:s=>s.flags.teaDone||s.self>=0, go:'n_croquet' },
     { t:'Ask the Cat, while any of it is still here, whether YOU are real, or only being dreamed.', kind:'reason', pre:'the question under all the others',
       note:'"you\'re part of somebody\'s dream," the Cat allows, "and so am I; the only question that matters is whose, and whether he wakes gently" — and it is gone, grin and all', waking:1, self:1, go:'n_cheshire_fork' },
+    { t:'Ask the Cat about the grey place at the very end — the cathedral of drawers, the one filed rose. You have stood there. You will not let it close over Wonderland again.', margin:true, pre:'from another dream', req:(s,p)=>p&&p.marginNotes&&p.marginNotes.index,
+      note:'"Ah — so you remember how it ends, if you let it," purrs the Cat. "Then you know the only trick worth knowing: give the dream away before they can file it." Forewarned, you set yourself against the correction, and a little of its grip slips.', index:-1, self:1, go:'n_cheshire_fork' },
   ]},
 
 /* ===================== THE MAD TEA-PARTY (purest posture room) ===================== */
@@ -455,7 +461,7 @@ n_tea:{ region:'teaparty', scene:'teaparty', title:'No Room! No Room!',
     { t:'"Time isn\'t a thing you can quarrel with — and you\'ve been quarrelling with it." Say it gently. It is why the clock stopped.', kind:'reason', pre:'the grounding truth', key:true,
       note:'the Hatter goes quiet; it is the truest thing said at this table in a hundred years of tea; he quarrelled with Time and Time stopped for him at six, and you can see he knows it', self:1, waking:1, journal:'I told the Hatter that Time is not a thing you can quarrel with.', go:'n_tea_time' },
     { t:'Leave the table without leaving it — get up and go while your teacup stays warm in your still-occupied chair, and let the two facts argue behind you.', rule:'break', cost:1, req:s=>s.contradiction>=1,
-      note:'you spend a contradiction, and for one glorious impossible moment you are both seated and gone; the Hatter, who has spent a hundred years unable to do exactly this, applauds', add:'being both at the table and away from it, at once', self:1, waking:1, fx:s=>s.flags.teaDone=1, go:'n_tea_leave' },
+      note:'you spend a contradiction, and for one glorious impossible moment you are both seated and gone; the Hatter, who has spent a hundred years unable to do exactly this, applauds', add:'being both at the table and away from it, at once', self:1, waking:1, fx:s=>{s.flags.teaDone=1;s.flags.brokeTea=1;}, go:'n_tea_leave' },
   ]},
 n_tea_time:{ region:'teaparty', scene:'teaparty', title:'Always Six O\'Clock',
   text:`The Hatter tells you, as if it explained everything, that it is always six o'clock now. He quarrelled with Time back in March — murdered the time, the Queen said, when he was singing — and ever since, Time won't do a thing the Hatter asks, and it stays six o'clock, tea-time, forever, with never a minute's pause to wash the cups.
@@ -580,6 +586,8 @@ Which is when you notice you are growing. Not by mushroom, not by cake — on yo
       note:'the court blusters; the King flounders; and the plain fact of it stands there unanswerable, and you feel yourself grow another foot toward the ceiling and the light', self:1, waking:2, size:1, journal:'In the court I said the plain thing: there is nothing written on that paper.', go:'n_trial' });
     if(S.contradiction>=2) c.push({ t:'Slip one contradiction into the Great Index itself — a single line that is both perfectly true and perfectly false — so the Book snags on it and can never finish reading.', rule:'break', cost:2, req:s=>s.contradiction>=2,
       note:'you spend two contradictions; the Registrar\'s machinery shudders and stalls on the impossible line, and the whole cathedral of drawers hangs open, unfinishable — Wonderland has room to breathe again', index:-3, self:1, add:'a line in the Index that is both true and false at once', go:'n_trial' });
+    c.push({ t:'Remember the sentence you wrote once, in a dream you woke from well, and never quite stopped believing: <em>"Wonderland is true because it changes."</em> Hold it ready for the Registrar.', margin:true, pre:'from another dream', req:(s,p)=>p&&p.marginNotes&&p.marginNotes.changes,
+      note:'the words come back to you whole, carried up out of an earlier waking; you did not have to find them again, and having them ready steadies your hand for what comes', self:1, waking:1, honest:true, go:'n_trial' });
     c.push({ t:'Play the trial as the theatre it is — testify in perfect nonsense, out-mad the mad court, and let the whole absurd machine run.', kind:'play', pre:'the way through',
       add:'a jury of twelve creatures all wrong at once', waking:1, go:'n_trial_verdict' });
     if(S.self>=4)
